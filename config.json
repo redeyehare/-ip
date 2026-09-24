@@ -1,0 +1,23 @@
+[
+  {
+    "name": "电信优选",
+    "url": "https://090227.pages.dev/bestcf?isp=ct&ips=50",
+    "folder": "ct",
+    "ips_per_file": 10,
+    "file_count": 3
+  },
+  {
+    "name": "联通优选",
+    "url": "https://090227.pages.dev/bestcf?isp=cu&ips=50",
+    "folder": "cu",
+    "ips_per_file": 10,
+    "file_count": 3
+  },
+  {
+    "name": "移动优选",
+    "url": "https://090227.pages.dev/bestcf?isp=cmcc&ips=50",
+    "folder": "cmcc",
+    "ips_per_file": 10,
+    "file_count": 3
+  }
+]

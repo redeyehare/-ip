@@ -1,0 +1,48 @@
+name: Update Preferred IPs
+
+on:
+  schedule:
+    # 每 3 天定时执行一次（UTC 0:00，对应北京时间 8:00）
+    - cron: '0 0 */3 * *'
+  # 每次向主分支推送代码启动时执行一次
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'ct/**'
+      - 'cu/**'
+      - 'cmcc/**'
+      - 'README.md'
+      - 'DEVELOPMENT_PLAN.md'
+  # 支持手动在网页点击运行
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-ips:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 运行 IP 抓取与切分脚本
+        run: python scripts/update_ips.py
+
+      - name: 检查并提交变更
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "无变更需要提交"
+          else
+            git commit -m "自动更新优选 IP 列表 [skip ci]"
+            git push
+          fi
